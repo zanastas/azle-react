@@ -34,7 +34,7 @@ export default Server(
             res.json({ greeting: `Hello, ${req.query.name}` });
         });
 
-        app.post('/price-oracle', async (req, res) => {
+        app.post('/weather-oracle', async (req, res) => {
             ic.setOutgoingHttpOptions({
                 maxResponseBytes: 20_000n,
                 cycles: 500_000_000_000n, // HTTP outcalls cost cycles. Unused cycles are returned.
@@ -42,9 +42,11 @@ export default Server(
             });
 
             const date = '2024-04-01';
-            const response = await (await fetch(`https://api.coinbase.com/v2/prices/${req.body.pair}/spot?date=${date}`)).json();
+            const response = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${req.body.latitude}&longitude=${req.body.longitude}&current=temperature_2m,is_day,rain`)).json();
             res.json(response);
         });
+
+
 
         app.use(express.static('/dist'));
         return app.listen();
