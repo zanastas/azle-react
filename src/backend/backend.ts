@@ -42,7 +42,7 @@ export default Server(
             });
 
             const date = '2024-04-01';
-            const response = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${req.body.latitude}&longitude=${req.body.longitude}&current=temperature_2m,is_day,rain`)).json();
+            const response = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${req.body.latitude}&longitude=${req.body.longitude}&current=relative_humidity_2m,rain,weather_code,wind_speed_10m&hourly=temperature_2m`)).json();
             res.json(response);
         });
 
